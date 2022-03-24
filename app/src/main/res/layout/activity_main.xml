@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="안뇽 코틀린 초보얌!" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+
+        <TextView
+            android:id="@+id/memoList"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scrollbars="vertical" />
+
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/writeMemoText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+
+        android:hint="여기다 메모할 거 써라" />
+
+    <LinearLayout
+        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/writeMemoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메모등록" />
+
+        <Button
+            android:id="@+id/deleteMemoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제하기"
+            tools:layout_editor_absoluteX="266dp"
+            tools:layout_editor_absoluteY="667dp" />
+    </LinearLayout>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
