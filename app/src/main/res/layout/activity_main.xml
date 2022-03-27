@@ -14,7 +14,7 @@
         android:text="안뇽 코틀린 초보얌!" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/memoList"
+        android:id="@+id/recyclerMemoList"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +28,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/EditMemo"
+            android:id="@+id/editMemo"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:ems="10"

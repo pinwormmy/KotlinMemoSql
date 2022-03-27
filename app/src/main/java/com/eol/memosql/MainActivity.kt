@@ -7,72 +7,49 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.inflate
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityMainBinding
-    private lateinit var adapter:RecyclerViewAdapter //adapter객체 먼저 선언해주기!
 
-    val mDatas=mutableListOf<TxtData>()
+    private val helper = DBHelper(this,"memo",null,1)
 
-    lateinit var dbHelper : DBHelper
-    lateinit var database : SQLiteDatabase
-
-    // 오늘 별로 한게 없다. 디비 추가시 새로고침하는것도 버거워..리사이클뷰 공부해보기
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        initializelist()
-        initTxtRecyclerView()
-
-        val memoList = findViewById<TextView>(R.id.memoList)
-        val writeMemoBtn = findViewById<Button>(R.id.writeMemoBtn)
-        val writeMemoText = findViewById<EditText>(R.id.writeMemoText)
+        setContentView(R.layout.activity_main)
 
 
-        dbHelper = DBHelper(this, "newdb.db", null, 1)
-        database = dbHelper.writableDatabase
+        val adapter = RecyclerViewAdapter()
+        adapter.listData.addAll(helper.selectMemo())
+        adapter.helper = helper
 
-        var query = "SELECT * FROM mytable;"
-        var c = database.rawQuery(query,null)
-        while(c.moveToNext()){
-            System.out.println("txt : " + c.getString(c.getColumnIndexOrThrow("txt")))
-            memoList.append(c.getString(c.getColumnIndexOrThrow("txt")) + "\n")
-        }
+        val recyclerMemoList = findViewById<RecyclerView>(R.id.recyclerMemoList)
+        val editMemo = findViewById<EditText>(R.id.editMemo)
 
+        recyclerMemoList.adapter = adapter
+        recyclerMemoList.layoutManager = LinearLayoutManager(this)
 
+        //저장버튼을 누를시 이벤트
+        val writeMemoButton = findViewById<Button>(R.id.writeMemoButton)
+        writeMemoButton.setOnClickListener {
 
-        // 메모 입력 테스트
-        writeMemoBtn.setOnClickListener{
+            if(editMemo.text.toString().isNotEmpty()){
+                val memo = Memo(null,editMemo.text.toString(),System.currentTimeMillis())
+                helper.insertMemo(memo)
+            }
+            adapter.listData.clear()
+            adapter.listData.addAll(helper.selectMemo())
 
-            var contentValues = ContentValues()
-            var memoContent:String = writeMemoText.text.toString()
-            contentValues.put("txt", memoContent)
-            Toast.makeText(this, memoContent, Toast.LENGTH_SHORT).show()
-            database.insert("mytable",null,contentValues)
-
-            memoList.invalidate()
+            //데이터가 추가된 다음 리사이클러뷰에 반영해 주기위한 함수
+            //데이터가 먼저 생성되고 리사이클러뷰가 다음에 호촐되면 사용하지 않아도 됩니다.
+            adapter.notifyDataSetChanged()
+            editMemo.setText("")
 
         }
+
+
+
     }
-
-    fun initTxtRecyclerView(){
-        val adapter=RecyclerViewAdapter() //어댑터 객체 만듦
-        adapter.datalist=mDatas //데이터 넣어줌
-        binding.recyclerView.adapter=adapter //리사이클러뷰에 어댑터 연결
-        binding.recyclerView.layoutManager=LinearLayoutManager(this) //레이아웃 매니저 연결
-    }
-
-    fun initializelist(){ //임의로 데이터 넣어서 만들어봄
-        with(mDatas){
-            add(TxtData(10,"test1"))
-            add(TxtData(11,"test2"))
-
-        }
-    }
-
-
 }
