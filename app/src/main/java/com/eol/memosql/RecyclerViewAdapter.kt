@@ -3,8 +3,8 @@ package com.eol.memosql
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+// import kotlinx.android.synthetic.main.memoitemlist.view.* 업데이트되면서 안쓰는
 import java.text.SimpleDateFormat
 
 class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.Holder>() {
@@ -12,10 +12,11 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.Holder>() {
     var helper:DBHelper? = null
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.memoitemlist,parent,false)
+            .inflate(R.layout.memoitemlist, parent,false)
+
+
 
 
 
@@ -47,9 +48,10 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
-
         fun setMemo(memo:Memo){
+
+
+
             itemView.textMemoNum.text = memo.memoNum.toString()
             itemView.textMemoContent.text = memo.memoContent.toString()
             val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm")

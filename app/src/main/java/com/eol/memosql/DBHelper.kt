@@ -42,9 +42,9 @@ class DBHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorF
 
         //반복문을 사용하여 list 에 데이터를 넘겨 줍시다.
         while(cursor.moveToNext()){
-            val memoNum = cursor.getLong(cursor.getColumnIndex("memoNum"))
-            val memoContent = cursor.getString(cursor.getColumnIndex("memoContent"))
-            val dateTime = cursor.getLong(cursor.getColumnIndex("dateTime"))
+            val memoNum = cursor.getLong(cursor.getColumnIndexOrThrow("memoNum"))
+            val memoContent = cursor.getString(cursor.getColumnIndexOrThrow("memoContent"))
+            val dateTime = cursor.getLong(cursor.getColumnIndexOrThrow("dateTime"))
 
             list.add(Memo(memoNum,memoContent,dateTime))
         }
