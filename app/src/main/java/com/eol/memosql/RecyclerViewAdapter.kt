@@ -33,6 +33,8 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.Holder>() {
 
     }
 
+    // 오류찾아 삼만리...gradle 오류는ㄴ어케 찾냐? ㄷㄷㄷ
+    
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         holder.textMemoNum.text = listData.get(position).memoNum.toString()
